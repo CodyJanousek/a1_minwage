@@ -1,10 +1,20 @@
 > a1_minwage <- read.csv("C:/Users/Cody/Downloads/a1_minwage.csv")
 > view(a1_minwage)
 > attach(a1_minwage)
+>#Make a table CHAIN and STATE: Duplicating Table 2 from Paper
 > chSTATE <- table(CHAIN,STATE)
+>#Save the table as a vector
 > vector_chSTATE <- c(chSTATE)
+>#Make some variables for the number of rest in each state
 > rest_NJ<-sum(STATE=="1")
 > rest_PA<-sum(STATE=="0")
+>#More variables
+> co_owned_NJ <- sum(CO_OWNED&STATE=="1")
+> co_owned_PA <- sum(CO_OWNED&STATE=="0")
+>#Data frame for the relative frequency of the chains/state
 > relFREQ = data.frame(NJ=(vector_chSTATE[5:8]/rest_NJ)*100, PA=(vector_chSTATE[1:4]/rest_PA)*100)
-> rownames(relFREQ) <- c("Burger King","KFC","Roy Rogers","Wendy's")
+>#Gotta add a row to include the Company-owned values
 > result <- rbind(relFREQ, c((co_owned_NJ/rest_NJ)*100,(co_owned_PA/rest_PA)*100))
+> mean_key_variables <-result
+>#Change the row names from 1, 2,... to their actual names
+>rownames(mean_key_variables) <- c("Burger King","KFC","Roy Rogers","Wendy's","Company-owned")
